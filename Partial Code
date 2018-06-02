@@ -1,0 +1,7 @@
+library(kohonen)
+som.grid <- somgrid(xdim=1, ydim=3, topo="hexagonal", toroidal = T)
+som.model.forcpdt <- som(carlsberg.scaled, grid=som.grid, keep.data=T, rlen=100)
+
+
+library(dplyr)
+ungroup(som.output) %>% group_by(clustno) %>% summarize(sales=sum(monetary), arec=mean(recency)/7,  afreqm=mean(frequency), spend=mean(monetary), cust_count=n()) %>% mutate(sales_percent=sales/sum(sales)*100, cust_prop=cust_count/sum(cust_count)*100)
